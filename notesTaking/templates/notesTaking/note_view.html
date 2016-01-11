@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% extends "notesTaking/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Your notes {% endblock %}
+{% block content %}
+{% if error_message %}
+  <p><strong> {{ error_message }} </strong></p>
+{% endif %}
+
+    <form action="{% url 'notesTaking:edit' notebook.id note.id %}" method="post">
+      {% csrf_token %}
+      Title: <input name="title" value="{{ note.title }}" /><br />
+      Content: <br />
+      <textarea name="content" cols="40" rows="10">
+        {{note.content}}
+      </textarea> <br/>
+      <input type="submit" value="Save" />
+    </form>
+{% endblock %}

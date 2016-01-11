@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% extends "notesTaking/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Edit note{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <h2>{{ notebook }} </h2>
+  </div>
+  <div class="row">
+  <ul class="list-group">
+    {% for note in notebook.note_set.all %}
+      <li class="list-group-item col-md-4 note-item">
+        <a href="{% url 'notesTaking:note' notebook.id note.id %}">
+        {{ note }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+  </div>
+</div>
+{% endblock %}
