@@ -25,6 +25,8 @@
   height: 120px;
   padding-top: 45px;
   text-align: center;
+  max-width: 300px;
+  margin-right: 20px;
 }
 
 .list-group-item {
