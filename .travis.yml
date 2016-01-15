@@ -10,6 +10,6 @@ env:
     - DJANGO_VERSION=1.8.2
     - DJANGO_VERSION=1.9.1
 install:
-    - pip install -q Django==$DJANGO 
+    - pip install -q Django==$DJANGO_VERSION
 script:
     python manage.py test notesTaking
