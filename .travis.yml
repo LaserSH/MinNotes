@@ -1,15 +1,16 @@
 language: python
 python:
-    - "2.6"
     - "2.7"
-    - "3.3"
-    - "3.4"
     - "3.5"
 env:
-    - DJANGO_VERSION=1.7.8
-    - DJANGO_VERSION=1.8.2
-    - DJANGO_VERSION=1.9.1
+    - DJANGO=1.7.8 DB=mysql
+    - DJANGO=1.9.1 DB=mysql
+services:
+    - mysql
 install:
-    - pip install -q Django==$DJANGO_VERSION
+    - pip install mysql-python
+    - pip install Django==$DJANGO
+before_script:
+    - mysql -e 'create database djangoTest;'
 script:
     python manage.py test notesTaking
