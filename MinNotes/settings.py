@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'guardian',
     'notesTaking.apps.NotesTakingConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -104,11 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-AUTHENTICATION_BACKENDS = {
-    'django.contrib.auth.backends.ModelBackend', # default
-    'guardian.backends.ObjectPermissionBackend',
-}
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
@@ -122,8 +116,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-ANONYMOUS_USER_ID = -1
 
 
 # Static files (CSS, JavaScript, Images)
