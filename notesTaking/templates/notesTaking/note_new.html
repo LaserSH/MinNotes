@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% extends "notesTaking/base.html" %}
+{% load staticfiles %}
+
+{% block title %}Edit note{% endblock %}
+{% block content %}
+
+<div class="container">
+  <div class="row">
+    <h2>Create new note in {{ notebook }} </h2>
+  </div>
+  <div class="row">
+    <form id="new_form" method="post" action="{% url 'notesTaking:note_new' notebook.slug %}">
+
+        {% csrf_token %}
+        {% for hidden in form.hidden_fields %}
+            {{ hidden }}
+        {% endfor %}
+
+        {% for field in form.visible_fields %}
+            {{ field.errors }}
+            {{ field.help_text }}<br>
+            {{ field }}<br>
+        {% endfor %}
+
+        <input type="submit" name="submit" value="Create Note" />
+    </form>
+  </div>
+</div>
+{% endblock %}

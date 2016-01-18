@@ -4,6 +4,9 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 
 from .models import Notebook, Note
+from .forms import NotebookForm, NoteForm
+
+from datetime import datetime
 
 class IndexView(generic.ListView):
     template_name = "notesTaking/index.html"
@@ -46,3 +49,42 @@ def note_edit(request, slug1, slug2):
     note.save()
     return HttpResponseRedirect(reverse('notesTaking:note',
             args=(slug1, slug2)))
+
+def notebook_new(request):
+    if request.method == 'POST':
+        form = NotebookForm(request.POST)
+
+        if form.is_valid():
+            nb = form.save(commit=False)
+            nb.init_date = datetime.now()
+            nb.save()
+            return index(request)
+
+        else:
+            print(form.errors)
+
+    # If the request was not a POST, display the form to enter details.
+    else:
+        form = NotebookForm(auto_id=True)
+
+    return render(request, 'notesTaking/notebook_new.html', {'form': form} )
+
+def note_new(request, slug):
+    nb = get_object_or_404(Notebook, slug = slug)
+
+    if request.method == 'POST':
+        form = NoteForm(request.POST)
+
+        if form.is_valid():
+            note = form.save(commit=False)
+            note.notebook = nb
+            note.init_date = datetime.now()
+            note.save()
+            return render(request, 'notesTaking/nb_view.html', {'notebook': nb})
+
+        else:
+            print(form.errors)
+    else:
+        form = NoteForm(auto_id=True)
+
+    return render(request, 'notesTaking/note_new.html', {'form': form, 'notebook': nb})

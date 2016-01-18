@@ -16,6 +16,11 @@
         <a href="{% url 'notesTaking:notebook' nb.slug %}">{{ nb.title }}</a>
       </li>
       {% endfor %}
+      <li class="list-group-item col-md-4 note-item">
+        <a href="{% url 'notesTaking:notebook_new' %}">
+          <i class="fa fa-plus-circle fa-2x"></i>
+        </a>
+      </li>
     </ul>
     </div>
   </div>

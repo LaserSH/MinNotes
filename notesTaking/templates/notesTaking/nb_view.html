@@ -18,6 +18,11 @@
         </a>
       </li>
     {% endfor %}
+      <li class="list-group-item col-md-4 note-item">
+        <a href="{% url 'notesTaking:note_new' notebook.slug %}">
+          <i class="fa fa-plus-circle fa-2x"></i>
+        </a>
+      </li>
   </ul>
   </div>
 </div>
