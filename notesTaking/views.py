@@ -27,22 +27,22 @@ def notebook_view(request, notebook_id):
     nb = get_object_or_404(Notebook, pk = notebook_id)
     return render(request, 'notesTaking/nb_view.html', {'notebook': nb})
 
-def note_view(request, notebook_id, note_id):
-    note = get_object_or_404(Note, pk = note_id)
-    nb = get_object_or_404(Notebook, pk = notebook_id)
+def note_view(request, slug1, slug2):
+    nb = get_object_or_404(Notebook, slug = slug1)
+    note = get_object_or_404(Note, slug = slug2)
     context = {
         'notebook': nb,
         'note': note,
     }
     return render(request, 'notesTaking/note_view.html', context)
 
-def note_edit(request, notebook_id, note_id):
-    note = get_object_or_404(Note, pk = note_id)
-    nb = get_object_or_404(Notebook, pk = notebook_id)
+def note_edit(request, slug1, slug2):
+    nb = get_object_or_404(Notebook, slug = slug1)
+    note = get_object_or_404(Note, slug = slug2)
     new_title = request.POST['title']
     new_content = request.POST['content']
     note.title = new_title
     note.content = new_content
     note.save()
     return HttpResponseRedirect(reverse('notesTaking:note',
-            args=(notebook_id, note_id)))
+            args=(slug1, slug2)))

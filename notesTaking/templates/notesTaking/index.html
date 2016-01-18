@@ -13,7 +13,7 @@
     <ul class="list-group">
       {% for nb in notebook_list %}
       <li class="list-group-item col-md-4 note-item">
-        <a href="{% url 'notesTaking:notebook' nb.id %}">{{ nb.title }}</a>
+        <a href="{% url 'notesTaking:notebook' nb.slug %}">{{ nb.title }}</a>
       </li>
       {% endfor %}
     </ul>
