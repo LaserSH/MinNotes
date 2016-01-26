@@ -17,6 +17,6 @@ class IndexViewTests(TestCase):
 
     def test_index_view_with_onebook(self):
         response = self.client.get(reverse('notesTaking:index'))
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 302)
         self.assertContains(response, '<p>')
         self.assertQuerysetEqual(response.context['notebook_list'], [])
