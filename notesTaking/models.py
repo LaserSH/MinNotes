@@ -9,6 +9,7 @@ class Notebook(models.Model):
     mod_date = models.DateTimeField('date last modified')
     description = models.CharField(max_length=500)
     slug = models.SlugField(default='Untitled')
+    user = models.ForeignKey(User, default=1)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
@@ -37,7 +38,7 @@ class Note(models.Model):
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
 
-    picture = models.ImageField(upload_to='profile_images', blank=True)
+    picture = models.ImageField(upload_to='notesTaking/img/avatar', blank=True)
 
     def __unicode__(self):
         return self.user.username

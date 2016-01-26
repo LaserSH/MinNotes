@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, Http404, HttpResponse
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.views import generic
 
 
@@ -21,17 +23,29 @@ class NotebookView(generic.DetailView):
     model = Notebook
     template_name = "notesTaking/nb_view.html"
 
+def home(request):
+    if request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('notesTaking:index'))
+
+    return render(request, 'notesTaking/home.html')
+
+@login_required
 def index(request):
-    notebook_list = Notebook.objects.order_by('-mod_date')[:5]
-    context = {
-        'notebook_list': notebook_list,
-    }
+    if not request.user.is_authenticated():
+        return HttpResponseRedirect(reverse('home'))
+
+    context = {}
+    notebook_list = notebook_list = Notebook.objects.filter(user=request.user.id)
+    if (notebook_list is not None):
+        context['notebook_list'] = notebook_list
     return render(request, 'notesTaking/index.html', context)
 
-def notebook_view(request, notebook_id):
-    nb = get_object_or_404(Notebook, pk = notebook_id)
+@login_required
+def notebook_view(request, slug):
+    nb = get_object_or_404(Notebook, slug = slug)
     return render(request, 'notesTaking/nb_view.html', {'notebook': nb})
 
+@login_required
 def note_view(request, slug1, slug2):
     nb = get_object_or_404(Notebook, slug = slug1)
     note = get_object_or_404(Note, slug = slug2)
@@ -41,6 +55,7 @@ def note_view(request, slug1, slug2):
     }
     return render(request, 'notesTaking/note_view.html', context)
 
+@login_required
 def note_edit(request, slug1, slug2):
     nb = get_object_or_404(Notebook, slug = slug1)
     note = get_object_or_404(Note, slug = slug2)
@@ -52,6 +67,7 @@ def note_edit(request, slug1, slug2):
     return HttpResponseRedirect(reverse('notesTaking:note',
             args=(slug1, slug2)))
 
+@login_required
 def notebook_new(request):
     if request.method == 'POST':
         form = NotebookForm(request.POST)
@@ -59,6 +75,7 @@ def notebook_new(request):
         if form.is_valid():
             nb = form.save(commit=False)
             nb.init_date = datetime.now()
+            nb.user = request.user
             nb.save()
             return index(request)
 
@@ -71,6 +88,7 @@ def notebook_new(request):
 
     return render(request, 'notesTaking/notebook_new.html', {'form': form} )
 
+@login_required
 def note_new(request, slug):
     nb = get_object_or_404(Notebook, slug = slug)
 
@@ -174,7 +192,7 @@ def user_login(request):
                 # If the account is valid and active, we can log the user in.
                 # We'll send the user back to the homepage.
                 login(request, user)
-                return HttpResponseRedirect('notesTaking/index.html')
+                return HttpResponseRedirect(reverse('notesTaking:index'))
             else:
                 # An inactive account was used - no logging in!
                 return HttpResponse("Your minNotes account is disabled.")
@@ -189,3 +207,12 @@ def user_login(request):
         # No context variables to pass to the template system, hence the
         # blank dictionary object...
         return render(request, 'notesTaking/login.html', {})
+
+# Use the login_required() decorator to ensure only those logged in can access the view.
+@login_required
+def user_logout(request):
+    # Since we know the user is logged in, we can now just log them out.
+    logout(request)
+
+    # Take the user back to the homepage.
+    return HttpResponseRedirect(reverse('home'))

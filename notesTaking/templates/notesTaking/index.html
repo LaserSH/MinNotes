@@ -4,18 +4,19 @@
 
 {% block title %}Your notebooks {% endblock %}
 {% block content %}
-{% if notebook_list %}
   <div class="container">
     <div class="row">
       <h2> Your notebooks</h2>
     </div>
     <div class="row">
     <ul class="list-group">
+      {% if notebook_list %}
       {% for nb in notebook_list %}
       <li class="list-group-item col-md-4 note-item">
         <a href="{% url 'notesTaking:notebook' nb.slug %}">{{ nb.title }}</a>
       </li>
       {% endfor %}
+      {% endif %}
       <li class="list-group-item col-md-4 note-item">
         <a href="{% url 'notesTaking:notebook_new' %}">
           <i class="fa fa-plus-circle fa-2x"></i>
@@ -24,7 +25,4 @@
     </ul>
     </div>
   </div>
-{% else %}
-  <p> No notebooks are available</p>
-{% endif %}
 {% endblock %}

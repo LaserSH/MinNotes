@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from notesTaking.views import IndexView
+from notesTaking import views
 
 urlpatterns = [
-    url(r'^$', IndexView.as_view(), name='home'),
+    url(r'^$', views.home, name='home'),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^login/$', views.user_login, name='login'),
+    url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^note/', include('notesTaking.urls', namespace="notesTaking")),
     url(r'^admin/', admin.site.urls),
 ]

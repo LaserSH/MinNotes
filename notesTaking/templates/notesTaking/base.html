@@ -17,11 +17,14 @@
         <a href="{% url 'notesTaking:index' %}" id="logo">
           <h3>MinNotes</h3>
         </a>
+        <img src="{% static 'notesTaking/img/logo.gif' %}" id="logo-img"/>
         {% if user.is_authenticated %}
         <img class="btn-login" src="{{userProfile.picture}}"/>
+        <a href="{% url 'notesTaking:logout' %}">
+          <button class="btn btn-default btn-primary btn-login">Log Out</button>
+        </a>
         <button class="btn btn-default btn-primary btn-login">{{user.username}}</button>
         {% else %}
-        <img src="{% static 'notesTaking/img/logo.gif' %}" id="logo-img"/>
         <a href="{% url 'notesTaking:register' %}">
           <button class="btn btn-default btn-primary btn-login">
                 Sign Up</button>
