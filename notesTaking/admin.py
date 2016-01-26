@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Note, Notebook
+from .models import Note, Notebook, UserProfile
 
 class NoteAdmin(admin.ModelAdmin):
     list_display = ('title', 'mod_date')
@@ -18,3 +18,4 @@ class NotebookAdmin(admin.ModelAdmin):
 
 admin.site.register(Note, NoteAdmin)
 admin.site.register(Notebook, NotebookAdmin)
+admin.site.register(UserProfile)

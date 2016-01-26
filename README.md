@@ -8,8 +8,9 @@ A minimal website for taking notes. Implemented using Django.
 <ul>
   <li> <strike> Improve notes addition and edit interface </strike> </li>
   <li> <strike> Improve Admin page </strike> </li>
-  <li> Add interface for different users </li>
+  <li> <strike> Add interface for different users </strike> </li>
   <li> Use bootstrap Toolkit </li>
   <li> Add delete note feature </li>
   <li> Make edit and create into the same page </li>
+  <li> Add password Validation </li>
 </ul>

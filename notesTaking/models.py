@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime
 from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
 class Notebook(models.Model):
     title = models.CharField(max_length=200)
@@ -32,3 +33,11 @@ class Note(models.Model):
 
     def __str__(self):
         return self.title
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+
+    picture = models.ImageField(upload_to='profile_images', blank=True)
+
+    def __unicode__(self):
+        return self.user.username

@@ -17,7 +17,20 @@
         <a href="{% url 'notesTaking:index' %}" id="logo">
           <h3>MinNotes</h3>
         </a>
+        {% if user.is_authenticated %}
+        <img class="btn-login" src="{{userProfile.picture}}"/>
+        <button class="btn btn-default btn-primary btn-login">{{user.username}}</button>
+        {% else %}
         <img src="{% static 'notesTaking/img/logo.gif' %}" id="logo-img"/>
+        <a href="{% url 'notesTaking:register' %}">
+          <button class="btn btn-default btn-primary btn-login">
+                Sign Up</button>
+        </a>
+        <a href="{% url 'notesTaking:login' %}">
+        <button class="btn btn-default btn-primary btn-login">
+                Sign In</button>
+        </a>
+        {% endif %}
       </div>
     </nav>
   </header>

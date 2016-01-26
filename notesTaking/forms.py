@@ -1,5 +1,5 @@
 from django import forms
-from .models import Note, Notebook
+from .models import Note, Notebook, User, UserProfile
 
 class NotebookForm(forms.ModelForm):
     title = forms.CharField(max_length=128, help_text="Please enter the category name.")
@@ -29,3 +29,15 @@ class NoteForm(forms.ModelForm):
         exclude = ('notebook','init_date','mod_date', 'slug')
         #or specify the fields to include (i.e. not include the category field)
         #fields = ('title', 'url', 'views')
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('picture',)

@@ -5,6 +5,8 @@ from . import views
 urlpatterns = [
     url(r'^$', views.IndexView.as_view(), name='index'),
     url(r'^new_notebook/$', views.notebook_new, name="notebook_new"),
+    url(r'^register/$', views.register, name='register'),
+    url(r'^login/$', views.user_login, name='login'),
     url(r'^(?P<slug>[\w\-]+)/$', views.NotebookView.as_view(),
             name='notebook'),
     url(r'^(?P<slug>[\w\-]+)/new_note/$', views.note_new, name="note_new"),
